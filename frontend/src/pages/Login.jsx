@@ -1,22 +1,26 @@
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useState } from 'react';
 import axios from 'axios';
 
-function Login ()  {
+function Login ({setUser})  {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
 
   const handleLogin = async () => { 
     try {
-      const response = await axios.post('/api/users/signin', {
+      const response = await axios.post('/api/users/login', {
         email: email,
         password: password,
       });
+      console.log(response);
 
       localStorage.setItem('token', response.data.token);
-      console.log(response);
+      setUser(response.data.user)
+      navigate('/');
     } catch(err){
+
       console.log(err)
     }
     
@@ -25,10 +29,9 @@ function Login ()  {
   return (
     <div className='auth-wrapper'>
       <form onSubmit={(e) => {
-        e.preventDefault()
-        handleLogin()
-      }}
-      
+          e.preventDefault()
+          handleLogin()
+        }}
       >
         <div>
           <h3 className="signup-greet">Hello, Welcome Back!</h3>
@@ -45,6 +48,8 @@ function Login ()  {
               onChange={(e) => 
                 setEmail(e.target.value)
               }
+              autoComplete='off' 
+              required
             />
           </div>
 
@@ -58,6 +63,7 @@ function Login ()  {
               onChange={(e) => 
                 setPassword(e.target.value)
               }
+              required
             />
           </div>
           <div>

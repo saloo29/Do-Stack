@@ -62,7 +62,7 @@ usersRoutes.post("/login", async (req, res) => {
   if(matchPassword){
     const token = jwt.sign({
       id : existingUser._id.toString()
-    }, secret, {expiresIn: "1hr"})
+    }, secret, /* {expiresIn: "1hr"} */)
     res.status(200).json({
       token: token,
       user: {

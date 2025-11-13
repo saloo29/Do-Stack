@@ -8,27 +8,25 @@ function SignUp ()  {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
-  const handleSignin = async () => { 
+  const handleSignup = async () => { 
     try {
       const response = await axios.post('/api/users/signup', {
         email: email,
         password: password,
         username: username
       });
-
       localStorage.setItem('token', response.data.token);
       console.log(response);
     } catch(err){
       console.log(err)
     }
-    
   }
 
   return (
     <div className='auth-wrapper'> 
     <form onSubmit ={(e) => {
         e.preventDefault()
-        handleSignin()
+        handleSignup()
       }}
     >
       <div>
@@ -45,6 +43,7 @@ function SignUp ()  {
             onChange={(e) => 
               setEmail(e.target.value)
             }
+            autoComplete='off'
             required
           />
         </div>
@@ -58,6 +57,7 @@ function SignUp ()  {
             onChange={(e) => 
               setUsername(e.target.value)
             }
+            autoComplete='off'
             required
           />
         </div>
