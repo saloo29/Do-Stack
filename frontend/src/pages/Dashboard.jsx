@@ -7,30 +7,30 @@ import TaskList from '../components/TaskList';
 function Dashboard ({user}) {
   const [tasks, setTasks] = useState([]);
 
+  const fetchTaskList = async () => {
+    try{
+      const response = await axios.get('/api/tasks/task',
+        {
+          headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+        }
+      );
+
+      console.log(response.data.tasks);
+      setTasks(response.data.tasks);
+    } catch(err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchTaskList = async () => {
-      try{
-        const response = await axios.get('/api/tasks/task',
-          {
-            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-          }
-        );
-
-        console.log(response.data.tasks);
-        setTasks(response.data.tasks);
-      } catch(err) {
-        console.log(err);
-      }
-    };
-
     fetchTaskList();
   }, [])
 
   return (
     <div className='dashboard-container'>
       <NavBar user={user}/>
-      <AddTask />
-      <h3>Tasks for today</h3>
+      <AddTask onTaskAdded={fetchTaskList}/>
+      <h3>Your Tasks</h3>
       <TaskList tasks={tasks}/>
     </div>
   )

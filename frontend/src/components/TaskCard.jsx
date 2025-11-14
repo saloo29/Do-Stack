@@ -4,8 +4,8 @@ const TaskCard = ({ tasks }) => {
       <div className="task-header">
         <h3 className="task-title">{tasks.title}</h3>
         <div className="task-actions">
-          <button className="action-button">Edit</button>
-          <button className="action-button">Delete</button>
+          <button className="edit-btn">Edit</button>
+          <button className="delete-btn">Delete</button>
         </div>
       </div>
       <div className="task-body">
