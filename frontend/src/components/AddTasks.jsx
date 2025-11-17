@@ -1,14 +1,16 @@
-import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
+import { addTaskThunk } from '../features/tasks/tasksThunks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 
 
-function AddTask ({ onTaskAdded }) {
+function AddTask () {
   const [title, setTitle] = useState('');
   const [ description, setDescription] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const loading = useAppSelector((state) => state.tasks.loading);
 
   const titleRef =  useRef();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if(isExpanded) titleRef.current.focus();
@@ -25,33 +27,15 @@ function AddTask ({ onTaskAdded }) {
     setIsExpanded(false);
   }
 
-  const handleAddTask = async () => {
+  const handleAddTask = () => {
     if(!title.trim()) return;
     if(!description.trim()) return;
 
-    try {
-      setIsLoading(true);
-
-      const response = await axios.post(
-        '/api/tasks/task', 
-        { title,description},
-        {
-          headers: {
-            Authorization : `Bearer ${localStorage.getItem("token")}`
-          }
-        });
-    
-      console.log(response.data)
-
-      if(onTaskAdded) onTaskAdded();
+    dispatch(addTaskThunk({title, description}))
 
       setIsExpanded(false);
       resetForm();
-    } catch(error) {
-      console.log(error)
-    } finally {
-      setIsLoading(false);
-    }
+
   };
 
 
@@ -103,8 +87,8 @@ function AddTask ({ onTaskAdded }) {
             <button 
               type='submit'
               className='add-btn'
-              disabled={isLoading}
-            >{isLoading ? 'Adding...' : 'Add Task'}</button>
+              disabled={loading}
+            >{loading ? 'Adding...' : 'Add Task'}</button>
 
             <button 
               className='edit-btn'
