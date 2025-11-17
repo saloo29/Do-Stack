@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard'
 import './App.css'
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     const fetchUser = async() => {
@@ -30,12 +30,17 @@ function App() {
         
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token-info");
+    setUser(null);
+  }
+
   return (
       <div>
         <Routes>
           <Route path = "signup" element={<SignUp />}/>
           <Route path = "login" element={<Login setUser={setUser}/>}/>
-          <Route path = "/" element={user ? <Dashboard user={user} /> : <Navigate to = '/login'/>}/>
+          <Route path = "/" element={user ? <Dashboard user={user} onLogout={handleLogout}/> : <Navigate to = '/login'/>}/>
         </Routes>
       </div>
   )

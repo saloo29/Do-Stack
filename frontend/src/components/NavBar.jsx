@@ -1,15 +1,10 @@
-const NavBar = ({ user }) => {
- /*  const handleLogout = () => {
-    headers: {Authorization: `Bearer ${localStorage.removeItem('token')}`}
-  }; */
-  const handleLogout = () => {
-    localStorage.removeItem("token-info");
-  }
-  
+const NavBar = ({ user, onLogout }) => {
+
   function capitalize(str){
     if(!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
+  
 
   return(
     <div className="nav-bar">
@@ -19,7 +14,7 @@ const NavBar = ({ user }) => {
        <div className="nav-items">
         <h4 className="welcome-greet">Welcome! {capitalize(user.username)}</h4>
         <button className='app-button' 
-          onClick={handleLogout}
+          onClick={onLogout}
         >Logout</button>
       </div>
     </div>

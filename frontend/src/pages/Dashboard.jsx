@@ -4,7 +4,7 @@ import AddTask from '../components/AddTasks';
 import NavBar from '../components/NavBar';
 import TaskList from '../components/TaskList';
 
-function Dashboard ({user}) {
+function Dashboard ({user, onLogout}) {
   const [tasks, setTasks] = useState([]);
 
   const fetchTaskList = async () => {
@@ -28,7 +28,7 @@ function Dashboard ({user}) {
 
   return (
     <div className='dashboard-container'>
-      <NavBar user={user}/>
+      <NavBar user={user} onLogout={onLogout}/>
       <AddTask onTaskAdded={fetchTaskList}/>
       <h3>Your Tasks</h3>
       <TaskList tasks={tasks}/>
