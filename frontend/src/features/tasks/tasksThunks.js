@@ -38,3 +38,26 @@ export const addTaskThunk = createAsyncThunk(
     }
   }
 );
+
+export const editTaskThunk = createAsyncThunk(
+  'tasks/editTask',
+  async({id, title, description}, thunkAPI) => {
+    try{
+      const response = await axios.put(
+      `api/tasks/task/${id}`,
+      {
+        title,
+        description
+      },{
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+   
+      console.log(response.data)
+      return response.data
+  } catch(error) {
+    return thunkAPI.rejectWithValue(error.response?.data || 'Failed to edit the task')
+  }
+  }
+)
