@@ -31,7 +31,6 @@ const EditTaskForm = ({tasks, onClose}) => {
         description
       })
     )
-
     onClose();
   }
 
@@ -63,7 +62,6 @@ const EditTaskForm = ({tasks, onClose}) => {
         </div>
       </div>
     </div>
-    
   )
 }
 

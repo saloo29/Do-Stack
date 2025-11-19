@@ -60,4 +60,25 @@ export const editTaskThunk = createAsyncThunk(
     return thunkAPI.rejectWithValue(error.response?.data || 'Failed to edit the task')
   }
   }
-)
+);
+
+export const deleteTaskThunk =createAsyncThunk (
+  'tasks/deleteTask',
+
+  async({id}, thunkAPI) => {
+    try{
+      const response = await axios.delete(
+        `api/tasks/task/${id}`,
+       {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+      console.log('delete response here', response.data)
+      console.log('delete response here two', response.data.deletedTodo)
+      return response.data.deletedTodo
+    } catch(error) {
+      return thunkAPI.rejectWithValue(error.response?.data || 'Failed to delete task')
+    }
+  }
+);

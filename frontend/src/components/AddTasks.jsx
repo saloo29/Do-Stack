@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 
 function AddTask () {
   const [title, setTitle] = useState('');
-  const [ description, setDescription] = useState('');
+  const [description, setDescription] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const loading = useAppSelector((state) => state.tasks.loading);
 
@@ -32,9 +32,8 @@ function AddTask () {
     if(!description.trim()) return;
 
     dispatch(addTaskThunk({title, description}))
-
-      setIsExpanded(false);
-      resetForm();
+    setIsExpanded(false);
+    resetForm();
 
   };
 

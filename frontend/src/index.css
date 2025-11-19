@@ -363,7 +363,7 @@ h1 {
   top: 0;
   left: 0;
   background-color: #00000071;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -383,7 +383,7 @@ h1 {
 
 .edit-form h3{
   margin: 0;
-  color: #8c386a;
+  color: #9A4E7C;
   line-height: 1.4rem;
   text-align: center;
 }
@@ -396,6 +396,8 @@ h1 {
 }
 
 .form-input input{
+  position: relative;
+  display: block;
   width: 100%;
   padding: 12px 12px;
   border-radius: 6px;
@@ -403,17 +405,35 @@ h1 {
   background-color: #2a2a2a;
   color: #f1f1f1;
   font-size: 1rem;
-  display: flex;
-  flex-direction: column;
+  z-index: 1;
 }
 
 .edit-buttons-div {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  gap: 15px;
+  margin-top: 70px;
 }
 
+.edit-buttons-div button:first-child,
+.edit-buttons-div button:last-child { 
+  padding: 6px 12px;
+  background-color: #9A4E7C;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
+.edit-buttons-div button:first-child:hover, 
+.edit-buttons-div button:last-child:hover {
+  background-color: #8c386a;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

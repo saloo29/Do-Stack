@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchTasksThunk, addTaskThunk, editTaskThunk } from './tasksThunks'
+import { fetchTasksThunk, addTaskThunk, editTaskThunk, deleteTaskThunk } from './tasksThunks'
 
 const initialState = {
   tasks: [],
@@ -64,6 +64,20 @@ const tasksSlice = createSlice({
     .addCase(editTaskThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload || 'Failed to edit task'
+    })
+    .addCase(deleteTaskThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null
+    })
+    .addCase(deleteTaskThunk.fulfilled, (state, action) => {
+      state.loading = false 
+      const deletedTask = action.payload;
+
+      state.tasks = state.tasks.filter(t => t._id !== deletedTask._id)    
+    })
+    .addCase(deleteTaskThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload || "Failed to delect task";
     })
   }
 })
